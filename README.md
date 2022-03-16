@@ -24,7 +24,7 @@ Python 版本：`3.x`
 
 安装 `requests` 模块：
 ```
-> pip install requests
+$ sudo pip install requests
 ```
 
 ## 配置
