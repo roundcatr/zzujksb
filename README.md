@@ -26,6 +26,7 @@ Python 版本：`3.x`
 ```
 $ sudo pip install requests
 ```
+在 Raspbian OS 上测试时，自带的 Python 3.7.3 中无 `urllib` 模块，自行编译安装新版本后问题解决。
 
 ## 配置
 
