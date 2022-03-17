@@ -28,6 +28,6 @@ def setCookie(userlink, cookie):
     userjson.close()
     user['cookie'] = cookie
     userfilename = os.readlink('./.users-pending/'+userlink)
-    userjson = open(userfilename, mode='w', encoding='utf-8')
+    userjson = open('./.users-pending/'+userfilename, mode='w', encoding='utf-8')
     json.dump(user, userjson, ensure_ascii=False)
     userjson.close()
