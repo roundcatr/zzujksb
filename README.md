@@ -52,7 +52,7 @@ $ sudo pip install requests
 
 原始用户数据存储于 `users-available/`，可存放多个用户，将需要激活的用户数据文件建立软链接于 `users-enabled/` 中即可。
 ```
-$ ln -s ../users-available/users-to-activate.json ./
+$ ln -s ../users-available/users-to-activate.json ./users-enabled/
 ```
 `.user-pending/` 目录表示待上报的用户。`reset_pending.sh` 用于重置 `.user-pending/` 目录中待上报的用户。注意需为 `reset_pending.sh` 添加执行权限。
 ```
