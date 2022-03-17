@@ -1,5 +1,5 @@
 #! /bin/bash
 
-project_path=$(cd `dirname $0`; pwd)
+cd $(dirname $0)
 cd ./.users-pending/
 ln -s ../users-enabled/* ./
