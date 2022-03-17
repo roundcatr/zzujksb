@@ -29,7 +29,7 @@ $ sudo pip install requests
 
 ## 配置
 
-`users-available/example.json` 为用户信息样例，
+`users-available/example.json` 为用户信息样例，各项代表含义如下：
 
 `city` 代表当前所在城市的行政区划代码。脚本中未内置各城市的行政区划代码，可通过搜索引擎检索得到。示例文件中的 `4101` 表示郑州。`address` 表示当前所在详细地址。
 
@@ -43,11 +43,22 @@ $ sudo pip install requests
 
 ## 使用
 
-原始用户数据存储于 `users-available/`，可存放多个用户，将需要激活的用户数据文件建立软链接于 `users-enabled/` 中即可。
+原始用户数据存储于 `users-available/`，可存放多个用户，将需要激活的用户数据文件建立软链接于 `users-enabled/` 中即可，注意使用相对路径建立软链接的正确性。
 ```
 $ cd ./users-enabled/
 $ ln -s ../users-available/users-to-activate.json ./
 ```
-`reset_pending.sh` 用于每日自动重置待上报的用户，可通过 crond 定时任务自动执行。`.user-pending/` 目录表示待上报的用户，为 `reset_pending.sh` 脚本自动生成，无须手动干预。
-
-为避免请求速度过快导致服务器拒绝响应，建议利用 crond 定时任务间隔 20 分钟以上运行一次 `zzujksb.py`。
+`.user-pending/` 目录表示待上报的用户。`reset_pending.sh` 用于重置 `.user-pending/` 目录中待上报的用户。注意需为 `reset_pending.sh` 添加执行权限。
+```
+$ chmod +x reset_pending.sh
+```
+可利用 cron 定时任务实现自动化。
+```
+$ crontab -e
+```
+添加任务示例：
+```
+0 0 * * * /path/to/zzujksb/reset_pending.sh  # 每日 0 时自动重置待上报用户
+30 1-8 * * * python3 /path/to/zzujksb/zzujksb.py  # 凌晨 1-8 时每小时的第 30 分钟执行一次自动上报
+```
+无论成功与否，`zzujksb.py` 仅会为每个用户执行一次自动填报，不会重复提交，上报结果将推送至配置文件中 `barkid` 项所指定的 iOS 设备。
