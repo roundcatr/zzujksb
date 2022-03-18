@@ -1,4 +1,5 @@
 #! /bin/bash
 
 cd $(dirname $0)
-ln -s ../users-enabled/* ./.users-pending/
+cd ./.users-pending/
+ln -s ../users-enabled/* ./
