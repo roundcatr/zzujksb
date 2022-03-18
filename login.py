@@ -69,6 +69,30 @@ def getId(user):
             return pwdlogin(user)
 
 def submit(user, ptopid, sid):
+
+    # 先向服务器请求填报页面，否则打卡无效
+    headers_requestform = {
+        'Cookie': user['cookie'],
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Origin': 'https://jksb.v.zzu.edu.cn',
+        'Content-Length': '82',
+        'Accept-Language': 'zh-CN,zh-Hans;q=0.9',
+        'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 15_4 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.4 Mobile/15E148 Safari/604.1',
+        'Referer': 'https://jksb.v.zzu.edu.cn/vls6sss/zzujksb.dll/jksb?ptopid='+ptopid+'&sid='+sid+'&fun2=',
+        'Accept-Encoding': 'gzip, deflate',
+        'Connection': 'close'
+    }
+    data_requestform = {
+        'did': '1',
+        'door': '',
+        'men6': 'a',	#以上参数作用不明
+        'ptopid': ptopid,
+        'sid': sid
+    }
+    requests.post('https://jksb.v.zzu.edu.cn:443/vls6sss/zzujksb.dll/jksb', headers=headers_requestform, data=data_requestform)
+
+    # 然后再上报数据
     headers_submit = {
         'Cookie': user['cookie'],
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -114,6 +138,8 @@ def submit(user, ptopid, sid):
         'sid': sid
     }
     response_submit = requests.post("https://jksb.v.zzu.edu.cn/vls6sss/zzujksb.dll/jksb", headers=headers_submit, data=data_submit)
+
+    # 根据响应判断是否成功
     if response_submit.text.find("zzujksb.dll/endok") != -1:
         return True
     else:
