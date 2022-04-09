@@ -130,6 +130,7 @@ def submit(user, ptopid, sid):
         'men6': 'a',
         'sheng6': '',
         'shi6': '',
+        'fun18': '819',
         'fun3': '',
         'jingdu': user['longitude'],  # 所在经度坐标
         'weidu': user['latitude'],  # 所在纬度坐标
