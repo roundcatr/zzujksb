@@ -118,7 +118,6 @@ def submit(user, ptopid, sid):
         'myvs_10': '否',  # 是否被居家隔离
         'myvs_11': '否',  # 所在社区是否有确诊
         'myvs_12': '否',  # 共同居住人是否确诊
-        'myvs_13': 'g',  # 健康码颜色
         'myvs_13a': user['city'][0:2],  #省份代码（从地市代码中截取）
         'myvs_13b': user['city'],  # 地市代码
         'myvs_13c': user['address'],  # 详细地址
