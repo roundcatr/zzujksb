@@ -3,14 +3,6 @@
 
 import requests
 
-def cutId(response):  # 从响应体中截取参数 ptopid
-    pos_ptopid = response.text.find('ptopid=s')
-    pos_sid = response.text.find('&sid=')
-    if pos_ptopid == -1:
-        return '', ''
-    ptopid = response.text[pos_ptopid+7:pos_sid]	# ptopid为认证登录信息的关键参数
-    return ptopid
-
 def pwdlogin(user):  # 用户名密码登录，同时修改 cookie
     headers_mobile = {
 	    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
@@ -98,7 +90,7 @@ def submit(user, ptopid, initsid):
         'Connection': 'close'
     }
     pos_sid = response_initpage.text.find('&sid=', response_initpage.text.find('<iframe name="zzj_fun_426" id="zzj_fun_426s"'))
-    sid2 = response_initpage.text[pos_sid+5, pos_sid+23]
+    sid2 = response_initpage.text[pos_sid+5:pos_sid+23]
     requests.get("https://jksb.v.zzu.edu.cn/vls6sss/zzujksb.dll/getsomething?ptopid="+ptopid+"&sid="+sid2, headers=headers2)
     
     # 第三步：请求信息页面，从中获取用于反脚本的隐藏参数
@@ -113,7 +105,7 @@ def submit(user, ptopid, initsid):
     }
     # 从初始页面中截取 sid
     pos_sid = pos_sid = response_initpage.text.find('&sid=', response_initpage.text.find('<iframe name="zzj_top_6s" id="zzj_top_6s"'))
-    sid_infopage = response_initpage.text[pos_sid+5, pos_sid+23]
+    sid_infopage = response_initpage.text[pos_sid+5:pos_sid+23]
     response_infopage = requests.get("https://jksb.v.zzu.edu.cn/vls6sss/zzujksb.dll/jksb?ptopid="+ptopid+"&sid="+sid_infopage+"&fun2=", headers=headers_infopage)
     # 获取反脚本的隐藏参数
     hiddenkeypos = response_infopage.text.find('type="hidden" name="fun18" value=')+34
@@ -130,7 +122,7 @@ def submit(user, ptopid, initsid):
         'Connection': 'close'
     }
     pos_sid = pos_sid = response_infopage.text.find('getsomething&sid=', response_infopage.text.find('<iframe name="zzj_fun_426" id="zzj_fun_426s"'))+12
-    sid4 = response_infopage.text[pos_sid+5, pos_sid+23]
+    sid4 = response_infopage.text[pos_sid+5:pos_sid+23]
     requests.get("https://jksb.v.zzu.edu.cn/vls6sss/zzujksb.dll/getsomething?ptopid="+ptopid+"&sid="+sid4, headers=headers4)
 
     # 第五步：向服务器请求填报页面，否则打卡无效
@@ -147,7 +139,7 @@ def submit(user, ptopid, initsid):
         'Connection': 'close'
     }
     pos_sid = pos_sid = response_infopage.text.find('<input type="hidden" name="sid" value=', response_infopage.text.find('<input type="hidden" name="ptopid" value='))+39
-    sid_form = response_infopage.text[pos_sid, pos_sid+18]
+    sid_form = response_infopage.text[pos_sid:pos_sid+18]
     data_requestform = {
         'did': '1',
         'door': '',
@@ -169,7 +161,7 @@ def submit(user, ptopid, initsid):
         'Connection': 'close'
     }
     pos_sid = formpage.text.find('&sid=', response_initpage.text.find('<iframe name="zzj_fun_426" id="zzj_fun_426s"'))
-    sid6 = formpage.text[pos_sid+5, pos_sid+23]
+    sid6 = formpage.text[pos_sid+5:pos_sid+23]
     requests.get("https://jksb.v.zzu.edu.cn/vls6sss/zzujksb.dll/getsomething?ptopid="+ptopid+"&sid="+sid6, headers=headers6)
 
     # 第七步：上报数据
@@ -186,7 +178,7 @@ def submit(user, ptopid, initsid):
         'Connection': 'close'
     }
     pos_sid = pos_sid = formpage.text.find('<input type="hidden" name="sid" value=', formpage.text.find('<input type="hidden" name="ptopid" value='))+39
-    sid_submit = formpage.text[pos_sid, pos_sid+18]
+    sid_submit = formpage.text[pos_sid:pos_sid+18]
     data_submit = {
         'myvs_1': '否',  # 是否发热
         'myvs_2': '否',  # 是否咳嗽
@@ -223,7 +215,7 @@ def submit(user, ptopid, initsid):
 
     # 第八步：作用未知
     pos_sid = response_submit.text.find('&sid=', response_initpage.text.find('<iframe name="zzj_fun_426" id="zzj_fun_426s"'))
-    sid8 = response_submit.text[pos_sid+5, pos_sid+23]
+    sid8 = response_submit.text[pos_sid+5:pos_sid+23]
     requests.get("https://jksb.v.zzu.edu.cn/vls6sss/zzujksb.dll/getsomething?ptopid="+ptopid+"&sid="+sid8, headers=headers6)
 
     # 判断是否成功
