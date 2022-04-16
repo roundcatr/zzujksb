@@ -219,7 +219,7 @@ def submit(user, ptopid, initsid):
     requests.get("https://jksb.v.zzu.edu.cn/vls6sss/zzujksb.dll/getsomething?ptopid="+ptopid+"&sid="+sid8, headers=headers6)
 
     # 判断是否成功
-    if response_submit.text.find("感谢您今日上报健康状况！") != -1:
+    if response_submit.text.find("/endok?") != -1:
         return True
     else:
         return False
