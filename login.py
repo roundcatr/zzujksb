@@ -121,7 +121,7 @@ def submit(user, ptopid, initsid):
         'Referer': 'https://jksb.v.zzu.edu.cn/vls6sss/zzujksb.dll/first6?ptopid='+ptopid+'&sid='+sid_infopage+'&fun2=&id8=',
         'Connection': 'close'
     }
-    pos_sid = pos_sid = response_infopage.text.find('getsomething&sid=', response_infopage.text.find('<iframe name="zzj_fun_426" id="zzj_fun_426s"'))+12
+    pos_sid = pos_sid = response_infopage.text.find('&sid=', response_infopage.text.find('<iframe name="zzj_fun_426" id="zzj_fun_426s"'))
     sid4 = response_infopage.text[pos_sid+5:pos_sid+23]
     requests.get("https://jksb.v.zzu.edu.cn/vls6sss/zzujksb.dll/getsomething?ptopid="+ptopid+"&sid="+sid4, headers=headers4)
 
