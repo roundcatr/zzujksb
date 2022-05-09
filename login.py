@@ -214,9 +214,9 @@ def submit(user, ptopid, initsid):
     response_submit = requests.post("https://jksb.v.zzu.edu.cn/vls6sss/zzujksb.dll/jksb", headers=headers_submit, data=data_submit)
 
     # 第八步：作用未知
-    pos_sid = response_submit.text.find('&sid=', response_initpage.text.find('<iframe name="zzj_fun_426" id="zzj_fun_426s"'))
-    sid8 = response_submit.text[pos_sid+5:pos_sid+23]
-    requests.get("https://jksb.v.zzu.edu.cn/vls6sss/zzujksb.dll/getsomething?ptopid="+ptopid+"&sid="+sid8, headers=headers6)
+    #pos_sid = response_submit.text.find('&sid=', response_initpage.text.find('<iframe name="zzj_fun_426" id="zzj_fun_426s"'))
+    #sid8 = response_submit.text[pos_sid+5:pos_sid+23]
+    #requests.get("https://jksb.v.zzu.edu.cn/vls6sss/zzujksb.dll/getsomething?ptopid="+ptopid+"&sid="+sid8, headers=headers6)
 
     # 判断是否成功
     if response_submit.text.find("/endok?") != -1:
