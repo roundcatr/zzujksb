@@ -185,13 +185,13 @@ def submit(user, ptopid, initsid):
         'myvs_3': '否',  # 是否乏力
         'myvs_4': '否',  # 是否鼻塞、流涕、咽痛或腹泻
         'myvs_5': '否',  # 是否被确诊
-        'myvs_6': '否',  # 是否为疑似
         'myvs_7': '否',  # 是否为密接
-        'myvs_8': '否',  # 是否在医院隔离治疗
-        'myvs_9': '否',  # 是否被集中隔离
-        'myvs_10': '否',  # 是否被居家隔离
-        'myvs_11': '否',  # 所在社区是否有确诊
-        'myvs_12': '否',  # 共同居住人是否确诊
+        'myvs_8': '否',  # 是否为次密接
+        'myvs_9': 'y',  # 是否核酸检测
+        'myvs_11': '否',  # 是否院内隔离
+        'myvs_12': '否',  # 是否集中隔离
+        'myvs_13': '否',  # 是否居家隔离
+        'myvs_15': '否',  # 共同居住人是否确诊
         'myvs_13a': user['city'][0:2],  #省份代码（从地市代码中截取）
         'myvs_13b': user['city'],  # 地市代码
         'myvs_13c': user['address'],  # 详细地址
@@ -214,9 +214,9 @@ def submit(user, ptopid, initsid):
     response_submit = requests.post("https://jksb.v.zzu.edu.cn/vls6sss/zzujksb.dll/jksb", headers=headers_submit, data=data_submit)
 
     # 第八步：作用未知
-    #pos_sid = response_submit.text.find('&sid=', response_initpage.text.find('<iframe name="zzj_fun_426" id="zzj_fun_426s"'))
-    #sid8 = response_submit.text[pos_sid+5:pos_sid+23]
-    #requests.get("https://jksb.v.zzu.edu.cn/vls6sss/zzujksb.dll/getsomething?ptopid="+ptopid+"&sid="+sid8, headers=headers6)
+    pos_sid = response_submit.text.find('&sid=', response_initpage.text.find('<iframe name="zzj_fun_426" id="zzj_fun_426s"'))
+    sid8 = response_submit.text[pos_sid+5:pos_sid+23]
+    requests.get("https://jksb.v.zzu.edu.cn/vls6sss/zzujksb.dll/getsomething?ptopid="+ptopid+"&sid="+sid8, headers=headers6)
 
     # 判断是否成功
     if response_submit.text.find("/endok?") != -1:
